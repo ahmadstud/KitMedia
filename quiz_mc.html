@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Choice Quiz</title>
+   <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #3498db;
+            margin-bottom: 30px;
+        }
+
+        nav {
+            margin-top: 20px;
+        }
+
+        a {
+            margin: 0 15px;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        a:hover {
+            background-color: #2078d1;
+        }
+
+        main {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Multiple Choice Quiz</h1>
+        <nav>
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <p>Answer the following multiple-choice questions:</p>
+
+        <form id="quizForm">
+            <!-- Multiple-choice questions will be dynamically added here -->
+
+            <button type="button" onclick="checkMCAnswers()">Submit Answers</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Multiple Choice Quiz. All rights reserved.</p>
+        <p>Contact us: quiz@example.com</p>
+    </footer>
+
+    <script>
+        // Array of multiple-choice questions and their options
+        const mcQuestions = [
+         // Conversion Questions
+            {
+                question: 'Convert the decimal number 25 to binary.',
+                options: ['11001', '10011', '10101', '11100'],
+                answer: '11001'
+            },
+            {
+                question: 'What is the binary representation of the decimal number 13?',
+                options: ['1001', '1101', '1011', '1111'],
+                answer: '1101'
+            },
+            {
+                question: 'Convert the binary number 101101 to decimal.',
+                options: ['29', '38', '45', '53'],
+                answer: '45'
+            },
+            {
+                question: 'If a decimal number is 200, what is its binary representation?',
+                options: ['11001000', '11111000', '10101000', '10010000'],
+                answer: '11001000'
+            },
+            {
+                question: 'Convert the binary number 1110011 to decimal.',
+                options: ['97', '99', '101', '103'],
+                answer: '99'
+            },
+
+            // Addition Questions
+            {
+                question: 'Perform the decimal addition: 25 + 17 = ',
+                options: ['40', '42', '45', '50'],
+                answer: '42'
+            },
+            {
+                question: 'Perform the binary addition: 1101 + 101 = ',
+                options: ['10010', '10110', '11000', '11100'],
+                answer: '10010'
+            },
+            {
+                question: 'Perform the decimal addition: 42 + 19 = ',
+                options: ['58', '61', '63', '67'],
+                answer: '61'
+            },
+            {
+                question: 'Perform the binary addition: 1010 + 111 = ',
+                options: ['10001', '11000', '11100', '11110'],
+                answer: '10001'
+            },
+            {
+                question: 'Perform the decimal addition: 56 + 78 = ',
+                options: ['124', '134', '145', '156'],
+                answer: '134'
+            },
+            {
+                question: 'Perform the binary addition: 1001 + 1011 = ',
+                options: ['10000', '10100', '11000', '11100'],
+                answer: '11000'
+            },
+            {
+                question: 'Perform the decimal addition: 123 + 45 = ',
+                options: ['156', '167', '178', '189'],
+                answer: '168'
+            },
+            {
+                question: 'Perform the binary addition: 11100 + 1011 = ',
+                options: ['100101', '100111', '101001', '101101'],
+                answer: '100111'
+            },
+            {
+                question: 'Perform the decimal addition: 89 + 34 = ',
+                options: ['112', '121', '123', '132'],
+                answer: '123'
+            },
+            {
+                question: 'Perform the binary addition: 11001 + 101 = ',
+                options: ['11110', '100111', '10110', '11000'],
+                answer: '11110'
+            },
+        ];
+
+        // Function to dynamically add multiple-choice questions to the form
+        function buildMCQuiz() {
+            const form = document.getElementById('quizForm');
+
+            mcQuestions.forEach((data, index) => {
+                const fieldset = document.createElement('fieldset');
+
+                const legend = document.createElement('legend');
+                legend.textContent = `Q${index + 1}: ${data.question}`;
+
+                fieldset.appendChild(legend);
+
+                data.options.forEach((option, optionIndex) => {
+                    const label = document.createElement('label');
+
+                    const input = document.createElement('input');
+                    input.setAttribute('type', 'radio');
+                    input.setAttribute('name', `q${index + 1}`);
+                    input.setAttribute('value', option);
+                    input.setAttribute('required', 'true');
+
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(` ${option}`));
+
+                    fieldset.appendChild(label);
+                });
+
+                form.appendChild(fieldset);
+            });
+        }
+
+        // Function to check multiple-choice answers and provide feedback
+        function checkMCAnswers() {
+            const userAnswers = {};
+            mcQuestions.forEach((data, index) => {
+                const selectedOption = document.querySelector(`input[name="q${index + 1}"]:checked`);
+                userAnswers[`q${index + 1}`] = selectedOption ? selectedOption.value : '';
+            });
+
+            let score = 0;
+            mcQuestions.forEach((data, index) => {
+                if (userAnswers[`q${index + 1}`] === data.answer) {
+                    score++;
+                }
+            });
+
+            alert(`Your score: ${score}/${mcQuestions.length}`);
+        }
+
+        // Call the buildMCQuiz function when the page loads
+        window.onload = buildMCQuiz;
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Home</title>
+   <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #3498db;
+            margin-bottom: 30px;
+        }
+
+        nav {
+            margin-top: 20px;
+        }
+
+        a {
+            margin: 0 15px;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        a:hover {
+            background-color: #2078d1;
+        }
+
+        main {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to the NoTenNoTwo Quiz</h1>
+        <nav>
+            <a href="quiz_mc.html">Multiple Choice Quiz</a>
+            <a href="quiz_structured.html">Structured Quiz</a>
+        </nav>
+    </header>
+
+    <main>
+ <div id="userGuide">
+            <h2>User Guide for Multiple Choice Quiz</h2>
+            <p>1. Read each question carefully and select the correct option.</p>
+            <p>2. Each question has only one correct answer.</p>
+            <p>3. Ensure you have answered all questions before submitting.</p>
+            <p>4. Click the "Submit Answers" button to check your score.</p>
+            <p>5. Your score will be displayed, and you can review your answers.</p>
+        </div>
+<div id="userGuide2">
+	<h2>User Guide for Structured Quiz</h2>
+            <p>1. Read each question carefully and provide detailed answers.</p>
+            <p>2. Each question may have multiple parts, ensure all are answered.</p>
+            <p>3. Your answers should include the required information or calculations.</p>
+            <p>4. Ensure you have answered all questions before submitting.</p>
+            <p>5. Click the "Submit Answers" button to check your score.</p>
+            <p>6. Your score will be displayed, and you can review your answers.</p>
+        </div>
+
+        <h2>Learn about Decimal to Binary and Binary to Decimal Conversion</h2>
+
+        <section>
+            <h3>Decimal to Binary Conversion</h3>
+            <p>
+                Converting a decimal number to binary involves repeatedly dividing the decimal number by 2 and
+                recording the remainders. The binary representation is obtained by reading the remainders in
+                reverse order.
+            </p>
+            <p>
+                For example, to convert the decimal number 25 to binary: 25 ÷ 2 = 12 remainder 1, 12 ÷ 2 = 6
+                remainder 0, 6 ÷ 2 = 3 remainder 0, 3 ÷ 2 = 1 remainder 1. Reading the remainders in reverse gives
+                the binary representation 11001.
+            </p>
+        </section>
+
+        <section>
+            <h3>Binary to Decimal Conversion</h3>
+            <p>
+                Converting a binary number to decimal involves multiplying each binary digit by the corresponding
+                power of 2 and then summing the results. The rightmost bit represents 2^0, the next bit represents
+                2^1, and so on.
+            </p>
+            <p>
+                For example, to convert the binary number 1101 to decimal: (1 * 2^3) + (1 * 2^2) + (0 * 2^1) + (1 *
+                2^0) = 8 + 4 + 0 + 1 = 13.
+            </p>
+        </section>
+
+ <section>
+            <h3>Addition of Decimal Numbers</h3>
+            <p>
+                In decimal addition, numbers are added column-wise, starting from the rightmost column. If the sum
+                in a column exceeds 9, a carry is generated to the next column on the left.
+            </p>
+            <p>
+                For example, to add 356 and 278:
+                <pre>
+                   &emsp;&emsp;  356
+                   +&emsp;  278
+                   __________
+                   &emsp;&emsp;  634
+                </pre>
+            </p>
+        </section>
+
+        <section>
+            <h3>Addition of Binary Numbers</h3>
+            <p>
+                Binary addition follows the same principles as decimal addition, but with a base of 2. In binary,
+                the sum in each column can be 0, 1, or 10 (when the sum is 2). Carryovers occur when the sum is
+                10, and they move to the next column on the left.
+            </p>
+            <p>
+                For example, to add 1101 and 101:
+                <pre>
+                   &emsp;&emsp;  1101
+                   +&emsp;  101
+                   __________
+                   &emsp;&emsp; 10010
+                </pre>
+            </p>
+        </section>
+
+    </main>
+</body>
+
+</html>
