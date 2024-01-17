@@ -5,12 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multiple Choice Quiz</title>
-   <style>
+      <style>
         body {
             font-family: 'Arial', sans-serif;
             text-align: center;
             margin: 50px;
+            background: url('background.jpg') center center fixed;
+            background-size: cover;
             background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header, footer {
+            background-color: rgba(255, 255, 255, 0.8); /* Transparent white */
+            padding: 10px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            width: 100%;
+        }
+
+        main {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
         }
 
         h1 {
@@ -37,17 +60,37 @@
             background-color: #2078d1;
         }
 
-        main {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
         p {
             color: #555;
             line-height: 1.6;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            background-color: #008000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .button-container button:hover {
+            background-color: #2078d1;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -60,14 +103,21 @@
         </nav>
     </header>
 
-    <main>
-        <p>Answer the following multiple-choice questions:</p>
+     <main>
+        <p id="quizInstructions">Answer the following multiple-choice questions:</p>
 
         <form id="quizForm">
-            <!-- Multiple-choice questions will be dynamically added here -->
-
-            <button type="button" onclick="checkMCAnswers()">Submit Answers</button>
+            <div id="questionContainer">
+                <!-- Questions and options will be dynamically added here -->
+            </div>
+            <div class="button-container">
+                <button type="button" id="prevBtn" onclick="prevQuestion()">Previous</button>
+                <button type="button" id="nextBtn" onclick="nextQuestion()">Next</button>
+                <button type="button" id="submitBtn" onclick="checkMCAnswers()">Submit Answers</button>
+            </div>
         </form>
+        <h2 id="quizTitle"></h2>
+        <p id="quizFeedback"></p>
     </main>
 
     <footer>
@@ -159,56 +209,108 @@
         ];
 
         // Function to dynamically add multiple-choice questions to the form
-        function buildMCQuiz() {
-            const form = document.getElementById('quizForm');
+         const questionContainer = document.getElementById('questionContainer');
+        const submitBtn = document.getElementById('submitBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const quizTitle = document.getElementById('quizTitle');
+        const quizInstructions = document.getElementById('quizInstructions');
+        const quizFeedback = document.getElementById('quizFeedback');
 
-            mcQuestions.forEach((data, index) => {
-                const fieldset = document.createElement('fieldset');
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
 
-                const legend = document.createElement('legend');
-                legend.textContent = `Q${index + 1}: ${data.question}`;
+        function buildQuestion(index) {
+            const data = mcQuestions[index];
 
-                fieldset.appendChild(legend);
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
 
-                data.options.forEach((option, optionIndex) => {
-                    const label = document.createElement('label');
+            const questionText = document.createElement('p');
+            questionText.textContent = `${index + 1}. ${data.question}`;
+            questionDiv.appendChild(questionText);
 
-                    const input = document.createElement('input');
-                    input.setAttribute('type', 'radio');
-                    input.setAttribute('name', `q${index + 1}`);
-                    input.setAttribute('value', option);
-                    input.setAttribute('required', 'true');
+            data.options.forEach((option, optionIndex) => {
+                const label = document.createElement('label');
 
-                    label.appendChild(input);
-                    label.appendChild(document.createTextNode(` ${option}`));
+                const input = document.createElement('input');
+                input.setAttribute('type', 'radio');
+                input.setAttribute('name', `q${index + 1}`);
+                input.setAttribute('value', option);
+                input.setAttribute('required', 'true');
 
-                    fieldset.appendChild(label);
-                });
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(` ${option}`));
 
-                form.appendChild(fieldset);
+                questionDiv.appendChild(label);
             });
+
+            questionContainer.innerHTML = '';
+            questionContainer.appendChild(questionDiv);
+
+            // Show/Hide Next and Previous buttons
+            if (currentQuestionIndex === 0) {
+                prevBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'inline-block';
+            }
+
+            if (currentQuestionIndex === mcQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
         }
 
-        // Function to check multiple-choice answers and provide feedback
-        function checkMCAnswers() {
-            const userAnswers = {};
-            mcQuestions.forEach((data, index) => {
-                const selectedOption = document.querySelector(`input[name="q${index + 1}"]:checked`);
-                userAnswers[`q${index + 1}`] = selectedOption ? selectedOption.value : '';
-            });
+        function nextQuestion() {
+            if (currentQuestionIndex < mcQuestions.length - 1) {
+                currentQuestionIndex++;
+                buildQuestion(currentQuestionIndex);
+            }
+        }
 
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                buildQuestion(currentQuestionIndex);
+            }
+        }
+
+        function checkMCAnswers() {
+            const selectedOption = document.querySelector(`input[name="q${currentQuestionIndex + 1}"]:checked`);
+            userAnswers[currentQuestionIndex] = selectedOption ? selectedOption.value : '';
+
+            if (currentQuestionIndex < mcQuestions.length - 1) {
+                nextQuestion();
+            } else {
+                showQuizFeedback();
+            }
+        }
+
+        function showQuizFeedback() {
             let score = 0;
-            mcQuestions.forEach((data, index) => {
-                if (userAnswers[`q${index + 1}`] === data.answer) {
+            userAnswers.forEach((answer, index) => {
+                if (answer === mcQuestions[index].answer) {
                     score++;
                 }
             });
 
-            alert(`Your score: ${score}/${mcQuestions.length}`);
+            quizTitle.textContent = 'Quiz Completed';
+            quizInstructions.textContent = `Your score: ${score}/${mcQuestions.length}`;
+            quizFeedback.textContent = 'Thank you for taking the quiz!';
+            questionContainer.innerHTML = '';
+
+            submitBtn.style.display = 'none';
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
         }
 
-        // Call the buildMCQuiz function when the page loads
-        window.onload = buildMCQuiz;
+        // Call the buildQuestion function when the page loads
+        window.onload = function () {
+            buildQuestion(currentQuestionIndex);
+        };
     </script>
 </body>
 
