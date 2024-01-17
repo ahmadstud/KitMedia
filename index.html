@@ -4,29 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Home</title>
-   <style>
+    <title>NoTenNoTwo Quiz Home</title>
+    <style>
         body {
+            margin: 0;
+            padding: 0;
             font-family: 'Arial', sans-serif;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: #333;
+        }
+
+        header,
+        footer {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
             text-align: center;
-            margin: 50px;
-            background-color: #f4f4f4;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        main {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: background-color 0.3s ease-in-out;
         }
 
         h1 {
             color: #3498db;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         nav {
             margin-top: 20px;
+            display: flex;
+            justify-content: center;
         }
 
         a {
-            margin: 0 15px;
+            margin-right: 15px;
             padding: 10px 20px;
-            color: #fff;
-            background-color: #3498db;
+            color: #000;
             text-decoration: none;
             font-weight: bold;
             border-radius: 5px;
@@ -34,20 +60,37 @@
         }
 
         a:hover {
-            background-color: #2078d1;
+            background-color: #3498db;
+            color: #fff;
         }
 
-        main {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        #userGuide,
+        #userGuide2 {
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #3498db;
         }
 
         p {
-            color: #555;
-            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        section {
+            margin-top: 20px;
+        }
+
+        pre {
+            margin: 0;
+        }
+@keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -58,27 +101,11 @@
         <nav>
             <a href="quiz_mc.html">Multiple Choice Quiz</a>
             <a href="quiz_structured.html">Structured Quiz</a>
+            <a href="guide.html">User Guide</a>
         </nav>
     </header>
 
     <main>
- <div id="userGuide">
-            <h2>User Guide for Multiple Choice Quiz</h2>
-            <p>1. Read each question carefully and select the correct option.</p>
-            <p>2. Each question has only one correct answer.</p>
-            <p>3. Ensure you have answered all questions before submitting.</p>
-            <p>4. Click the "Submit Answers" button to check your score.</p>
-            <p>5. Your score will be displayed, and you can review your answers.</p>
-        </div>
-<div id="userGuide2">
-	<h2>User Guide for Structured Quiz</h2>
-            <p>1. Read each question carefully and provide detailed answers.</p>
-            <p>2. Each question may have multiple parts, ensure all are answered.</p>
-            <p>3. Your answers should include the required information or calculations.</p>
-            <p>4. Ensure you have answered all questions before submitting.</p>
-            <p>5. Click the "Submit Answers" button to check your score.</p>
-            <p>6. Your score will be displayed, and you can review your answers.</p>
-        </div>
 
         <h2>Learn about Decimal to Binary and Binary to Decimal Conversion</h2>
 
@@ -109,7 +136,7 @@
             </p>
         </section>
 
- <section>
+        <section>
             <h3>Addition of Decimal Numbers</h3>
             <p>
                 In decimal addition, numbers are added column-wise, starting from the rightmost column. If the sum
@@ -143,8 +170,12 @@
                 </pre>
             </p>
         </section>
-
     </main>
+
+    <footer>
+        <p>&copy; 2024 NoTenNoTwo Quiz. All rights reserved.</p>
+        <p>Contact us: quiz@example.com</p>
+    </footer>
 </body>
 
 </html>
