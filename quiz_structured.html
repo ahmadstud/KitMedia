@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,12 +6,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Structured Quiz on Binary and Decimal</title>
- <style>
+  <style>
         body {
             font-family: 'Arial', sans-serif;
             text-align: center;
             margin: 50px;
+            background: url('background.jpg') center center fixed;
+            background-size: cover;
             background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 10px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            width: 100%;
+        }
+
+        main {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        footer {
+            background-color: #fff;
+            padding: 10px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            width: 100%;
         }
 
         h1 {
@@ -18,44 +50,7 @@
             margin-bottom: 30px;
         }
 
-        main {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-
-        form {
-            margin-top: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 100px;
-            padding: 8px;
-            margin-bottom: 15px;
-        }
-
-        button {
-            background-color: #008000;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        button:hover {
-            background-color: #2078d1;
-        }
- 	nav {
+        nav {
             margin-top: 20px;
         }
 
@@ -72,28 +67,77 @@
 
         a:hover {
             background-color: #2078d1;
+        }
+
+        main {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            background-color: #008000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .button-container button:hover {
+            background-color: #2078d1;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <header>
-        <h1>Structured Quiz on Binary and Decimal</h1>
+     <header>
+        <h1>Structured Quiz</h1>
         <nav>
             <a href="index.html">Home</a>
         </nav>
     </header>
 
     <main>
-        <p>Answer the following structured questions:</p>
+        <p id="quizInstructions">Answer the following structured questions:</p>
 
         <form id="quizForm">
-            <!-- Structured questions will be dynamically added here -->
+            <div id="questionContainer">
+                <!-- Structured questions will be dynamically added here -->
+            </div>
+            <div class="button-container">
+                <button type="button" id="prevBtn" onclick="changeQuestion(-1)">Previous</button>
+                <button type="button" id="nextBtn" onclick="changeQuestion(1)">Next</button>
+                <button type="button" id="submitBtn" onclick="checkStructuredAnswers()">Submit Answers</button>
+            </div>
         </form>
-
-        <button type="button" onclick="checkStructuredAnswers()">Submit Answers</button>
+        <h2 id="quizTitle"></h2>
+        <p id="quizFeedback"></p>
     </main>
 
-	 <div id="quizResults"></div>
 
     <footer>
         <p>&copy; 2024 Structured Quiz. All rights reserved.</p>
@@ -187,48 +231,99 @@
         ];
 
         // Function to dynamically add structured questions to the form
+        const form = document.getElementById('quizForm');
+        const questionContainer = document.getElementById('questionContainer');
+        const submitBtn = document.getElementById('submitBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const quizTitle = document.getElementById('quizTitle');
+        const quizInstructions = document.getElementById('quizInstructions');
+        const quizFeedback = document.getElementById('quizFeedback');
+
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+
         function buildStructuredQuiz() {
-            const form = document.getElementById('quizForm');
+            const data = structuredBinaryDecimalQuestions[currentQuestionIndex];
 
-            structuredBinaryDecimalQuestions.forEach((data, index) => {
-                const label = document.createElement('label');
-                label.setAttribute('for', `q${index + 1}`);
-                label.textContent = `Q${index + 1}: ${data.question}`;
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
 
-                const textarea = document.createElement('textarea');
-                textarea.setAttribute('id', `q${index + 1}`);
-                textarea.setAttribute('name', `q${index + 1}`);
-                textarea.setAttribute('required', 'true');
+            const questionText = document.createElement('p');
+            questionText.textContent = `${currentQuestionIndex + 1}. ${data.question}`;
+            questionDiv.appendChild(questionText);
 
-                form.appendChild(label);
-                form.appendChild(textarea);
-            });
+            const textarea = document.createElement('textarea');
+            textarea.setAttribute('id', `q${currentQuestionIndex + 1}`);
+            textarea.setAttribute('name', `q${currentQuestionIndex + 1}`);
+            textarea.setAttribute('required', 'true');
+
+            questionDiv.appendChild(textarea);
+
+            questionContainer.innerHTML = '';
+            questionContainer.appendChild(questionDiv);
+
+            // Show/Hide Next and Previous buttons
+            if (currentQuestionIndex === 0) {
+                prevBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'inline-block';
+            }
+
+            if (currentQuestionIndex === structuredBinaryDecimalQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
         }
 
-        // Function to check structured answers and provide feedback
+        function changeQuestion(direction) {
+            if (direction === 1 && currentQuestionIndex < structuredBinaryDecimalQuestions.length - 1) {
+                currentQuestionIndex++;
+            } else if (direction === -1 && currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+            }
+
+            buildStructuredQuiz();
+        }
+
         function checkStructuredAnswers() {
-            const userAnswers = {};
+            const answer = document.getElementById(`q${currentQuestionIndex + 1}`).value;
+            userAnswers[currentQuestionIndex] = answer;
+
+            if (currentQuestionIndex < structuredBinaryDecimalQuestions.length - 1) {
+                changeQuestion(1);
+            } else {
+                showStructuredQuizFeedback();
+            }
+        }
+
+        function showStructuredQuizFeedback() {
             let score = 0;
-
-            structuredBinaryDecimalQuestions.forEach((data, index) => {
-                const userAnswer = document.getElementById(`q${index + 1}`).value.trim().toLowerCase();
-                userAnswers[`q${index + 1}`] = userAnswer;
-
-                if (userAnswer === data.answer.toLowerCase()) {
-                    score += 2; // Correct answer gets 2 points
-                } else if (userAnswer.includes(data.answer.toLowerCase())) {
-                    score += 1; // Partially correct answer gets 1 point
+            userAnswers.forEach((answer, index) => {
+                if (answer.trim().toLowerCase() === structuredBinaryDecimalQuestions[index].answer.toLowerCase()) {
+                    score++;
                 }
             });
 
-            // Display the score
-            const quizResults = document.getElementById('quizResults');
-            quizResults.innerHTML = `<p>Your score: ${score} out of ${structuredBinaryDecimalQuestions.length * 2}</p>`;
+            quizTitle.textContent = 'Quiz Completed';
+            quizInstructions.textContent = `Your score: ${score}/${structuredBinaryDecimalQuestions.length}`;
+            quizFeedback.textContent = 'Thank you for taking the quiz!';
+            questionContainer.innerHTML = '';
+
+            submitBtn.style.display = 'none';
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
         }
 
         // Call the buildStructuredQuiz function when the page loads
-        window.onload = buildStructuredQuiz;
+        window.onload = function () {
+            buildStructuredQuiz();
+        };
     </script>
+
 </body>
 
 </html>
