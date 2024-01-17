@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoTenNoTwo Quiz Home</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: #333;
+        }
+
+        header, footer {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        main {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        h1, h2 {
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        a {
+            margin-right: 15px;
+            padding: 10px 20px;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        a:hover {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        #userGuide, #userGuide2 {
+            margin-top: 20px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        section {
+            margin-top: 20px;
+        }
+
+        pre {
+            margin: 0;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to the NoTenNoTwo Quiz</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="quiz_mc.html">Multiple Choice Quiz</a>
+            <a href="quiz_structured.html">Structured Quiz</a>
+        </nav>
+    </header>
+
+    <main>
+<section>
+            <h3>User Guide for Multiple Choice Quiz</h3>
+            <p>1. Read each question carefully and select the correct option.</p>
+            <p>2. Each question has only one correct answer.</p>
+            <p>3. Ensure you have answered all questions before submitting.</p>
+            <p>4. Click the "Submit Answers" button to check your score.</p>
+            <p>5. Your score will be displayed, and you can review your answers.</p>
+
+            <h3>User Guide for Structured Quiz</h3>
+            <p>1. Read each question carefully and provide detailed answers.</p>
+            <p>2. Each question may have multiple parts; ensure all are answered.</p>
+            <p>3. Your answers should include the required information or calculations.</p>
+            <p>4. Ensure you have answered all questions before submitting.</p>
+            <p>5. Click the "Submit Answers" button to check your score.</p>
+            <p>6. Your score will be displayed, and you can review your answers.</p>
+</section>
+    </main>
+<footer>
+        <p>&copy; 2024 NoTenNoTwo Quiz. All rights reserved.</p>
+        <p>Contact us: quiz@example.com</p>
+    </footer>
+</body>
+
+</html>
