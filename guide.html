@@ -124,5 +124,33 @@
         <p>Contact us: quiz@example.com</p>
     </footer>
 </body>
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+            // Create an audio element for background music
+            const backgroundMusic = new Audio('background_music.mp3');
+            backgroundMusic.loop = true; // Loop the music
+            
+            // Autoplay the music
+            backgroundMusic.play().catch(error => {
+                console.error('Autoplay was prevented:', error);
+            });
+            
+            // Function to toggle music on/off
+            function toggleMusic() {
+                if (backgroundMusic.paused) {
+                    backgroundMusic.play(); // Play music if paused
+                } else {
+                    backgroundMusic.pause(); // Pause music if playing
+                }
+            }
+
+            // Add event listener to footer for mute button
+            const footer = document.querySelector('footer');
+            const muteButton = document.createElement('button');
+            muteButton.textContent = 'Mute Music';
+            muteButton.onclick = toggleMusic;
+            footer.appendChild(muteButton);
+        });
+</script>
 
 </html>
