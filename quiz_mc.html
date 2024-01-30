@@ -124,7 +124,7 @@
     </header>
 
      <main>
-        <p id="quizInstructions"><h2>Answer the following multiple-choice questions:</h2></p>
+        <p id="quizInstructions"></p>
 
         <form id="quizForm">
             <div id="questionContainer">
@@ -146,113 +146,78 @@
     </footer>
 
     <script>
-        // Array of multiple-choice questions and their options
-        const mcQuestions = [
-         // Conversion Questions
+          const mcQuestions = [
+            // Decimal to Binary Conversion Questions
             {
                 question: 'Convert the decimal number 25 to binary.',
                 options: ['11001', '10011', '10101', '11100'],
                 answer: '11001'
             },
             {
-                question: 'What is the binary representation of the decimal number 13?',
-                options: ['1001', '1101', '1011', '1111'],
+                question: 'Convert the decimal number 13 to binary.',
+                options: ['1101', '1001', '1011', '1111'],
                 answer: '1101'
             },
             {
-                question: 'Convert the binary number 101101 to decimal.',
-                options: ['29', '38', '45', '53'],
-                answer: '45'
+                question: 'Convert the decimal number 45 to binary.',
+                options: ['101101', '110101', '111101', '100101'],
+                answer: '101101'
             },
             {
-                question: 'If a decimal number is 200, what is its binary representation?',
-                options: ['11001000', '11111000', '10101000', '10010000'],
+                question: 'Convert the decimal number 200 to binary.',
+                options: ['11001000', '10101000', '11111000', '11011000'],
                 answer: '11001000'
             },
             {
-                question: 'Convert the binary number 1110011 to decimal.',
-                options: ['97', '99', '101', '103'],
-                answer: '99'
+                question: 'Convert the decimal number 99 to binary.',
+                options: ['1100011', '110011', '101011', '100111'],
+                answer: '1100011'
             },
-
-            // Addition Questions
+            // Binary to Decimal Conversion Questions
             {
-                question: 'Perform the decimal addition: 25 + 17 = ',
-                options: ['40', '42', '45', '50'],
-                answer: '42'
-            },
-            {
-                question: 'Perform the binary addition: 1101 + 101 = ',
-                options: ['10010', '10110', '11000', '11100'],
-                answer: '10010'
+                question: 'Convert the binary number 10101 to decimal.',
+                options: ['21', '19', '23', '17'],
+                answer: '21'
             },
             {
-                question: 'Perform the decimal addition: 42 + 19 = ',
-                options: ['58', '61', '63', '67'],
-                answer: '61'
+                question: 'Convert the binary number 111010 to decimal.',
+                options: ['58', '58', '60', '56'],
+                answer: '58'
             },
             {
-                question: 'Perform the binary addition: 1010 + 111 = ',
-                options: ['10001', '11000', '11100', '11110'],
-                answer: '10001'
+                question: 'Convert the binary number 1101101 to decimal.',
+                options: ['109', '111', '105', '107'],
+                answer: '109'
             },
             {
-                question: 'Perform the decimal addition: 56 + 78 = ',
-                options: ['124', '134', '145', '156'],
-                answer: '134'
+                question: 'Convert the binary number 1001110 to decimal.',
+                options: ['76', '78', '74', '80'],
+                answer: '78'
             },
             {
-                question: 'Perform the binary addition: 1001 + 1011 = ',
-                options: ['10000', '10100', '11000', '11100'],
-                answer: '11000'
-            },
-            {
-                question: 'Perform the decimal addition: 123 + 45 = ',
-                options: ['156', '167', '178', '189'],
-                answer: '168'
-            },
-            {
-                question: 'Perform the binary addition: 11100 + 1011 = ',
-                options: ['100101', '100111', '101001', '101101'],
-                answer: '100111'
-            },
-            {
-                question: 'Perform the decimal addition: 89 + 34 = ',
-                options: ['112', '121', '123', '132'],
-                answer: '123'
-            },
-            {
-                question: 'Perform the binary addition: 11001 + 101 = ',
-                options: ['11110', '100111', '10110', '11000'],
-                answer: '11110'
-            },
+                question: 'Convert the binary number 1111010 to decimal.',
+                options: ['122', '120', '124', '126'],
+                answer: '122'
+            }
         ];
 
-        // Function to dynamically add multiple-choice questions to the form
-         const questionContainer = document.getElementById('questionContainer');
-        const submitBtn = document.getElementById('submitBtn');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const quizTitle = document.getElementById('quizTitle');
-        const quizInstructions = document.getElementById('quizInstructions');
-        const quizFeedback = document.getElementById('quizFeedback');
-
         let currentQuestionIndex = 0;
-        let userAnswers = [];
+        let userAnswers = new Array(mcQuestions.length).fill('');
 
         function buildQuestion(index) {
-            const data = mcQuestions[index];
+            const questionContainer = document.getElementById('questionContainer');
+            questionContainer.innerHTML = '';
 
+            const question = mcQuestions[index];
             const questionDiv = document.createElement('div');
             questionDiv.className = 'question';
 
             const questionText = document.createElement('p');
-            questionText.textContent = `${index + 1}. ${data.question}`;
+            questionText.textContent = `${index + 1}. ${question.question}`;
             questionDiv.appendChild(questionText);
 
-            data.options.forEach((option, optionIndex) => {
+            question.options.forEach((option, optionIndex) => {
                 const label = document.createElement('label');
-
                 const input = document.createElement('input');
                 input.setAttribute('type', 'radio');
                 input.setAttribute('name', `q${index + 1}`);
@@ -265,23 +230,13 @@
                 questionDiv.appendChild(label);
             });
 
-            questionContainer.innerHTML = '';
             questionContainer.appendChild(questionDiv);
 
-            // Show/Hide Next and Previous buttons
-            if (currentQuestionIndex === 0) {
-                prevBtn.style.display = 'none';
-            } else {
-                prevBtn.style.display = 'inline-block';
-            }
-
-            if (currentQuestionIndex === mcQuestions.length - 1) {
-                nextBtn.style.display = 'none';
-                submitBtn.style.display = 'inline-block';
-            } else {
-                nextBtn.style.display = 'inline-block';
-                submitBtn.style.display = 'none';
-            }
+            // Enable/disable Next and Previous buttons based on question index
+            const nextBtn = document.getElementById('nextBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            nextBtn.disabled = index === mcQuestions.length - 1;
+            prevBtn.disabled = index === 0;
         }
 
         function nextQuestion() {
@@ -317,10 +272,18 @@
                 }
             });
 
+            const quizTitle = document.getElementById('quizTitle');
+            const quizInstructions = document.getElementById('quizInstructions');
+            const quizFeedback = document.getElementById('quizFeedback');
+
             quizTitle.textContent = 'Quiz Completed';
             quizInstructions.textContent = `Your score: ${score}/${mcQuestions.length}`;
             quizFeedback.textContent = 'Thank you for taking the quiz!';
             questionContainer.innerHTML = '';
+
+            const submitBtn = document.getElementById('submitBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
 
             submitBtn.style.display = 'none';
             prevBtn.style.display = 'none';
@@ -331,6 +294,7 @@
         window.onload = function () {
             buildQuestion(currentQuestionIndex);
         };
+
         document.addEventListener('DOMContentLoaded', function() {
             // Create an audio element for background music
             const backgroundMusic = new Audio('background_music.mp3');
