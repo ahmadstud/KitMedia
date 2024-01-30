@@ -1,4 +1,4 @@
-
+User
 <!DOCTYPE html>
 <html lang="en">
 
@@ -125,15 +125,15 @@
     </header>
 
     <main>
-        <p id="quizInstructions"><h2>Answer the following structured questions:</h2></p>
+        <p id="quizInstructions"></p>
 
         <form id="quizForm">
             <div id="questionContainer">
                 <!-- Structured questions will be dynamically added here -->
             </div>
             <div class="button-container">
-                <button type="button" id="prevBtn" onclick="changeQuestion(-1)">Previous</button>
-                <button type="button" id="nextBtn" onclick="changeQuestion(1)">Next</button>
+                <button type="button" id="prevBtn" onclick="prevQuestion()">Previous</button>
+<button type="button" id="nextBtn" onclick="nextQuestion()">Next</button>
                 <button type="button" id="submitBtn" onclick="checkStructuredAnswers()">Submit Answers</button>
             </div>
         </form>
@@ -150,87 +150,46 @@
     <script>
         // Array of structured questions related to binary and decimal
         const structuredBinaryDecimalQuestions = [
-            {
-                question: 'Perform the decimal addition: 25 + 17 = ',
-                answer: '42'
+          {
+                question: 'Convert the decimal number 42 to binary: ',
+                answer: '101010'
             },
             {
-                question: 'Perform the binary addition: 1101 + 101 = ',
-                answer: '10010'
+                question: 'Convert the decimal number 87 to binary: ',
+                answer: '1010111'
             },
             {
-                question: 'Perform the decimal addition: 42 + 19 = ',
-                answer: '61'
+                question: 'Convert the decimal number 123 to binary: ',
+                answer: '1111011'
             },
             {
-                question: 'Perform the binary addition: 1010 + 111 = ',
-                answer: '10001'
+                question: 'Convert the binary number 1010 to decimal: ',
+                answer: '10'
             },
             {
-                question: 'Perform the decimal addition: 56 + 78 = ',
-                answer: '134'
+                question: 'Convert the binary number 1101 to decimal: ',
+                answer: '13'
             },
             {
-                question: 'Perform the binary addition: 1001 + 1011 = ',
-                answer: '11000'
+                question: 'Convert the binary number 11100 to decimal: ',
+                answer: '28'
             },
             {
-                question: 'Perform the decimal addition: 123 + 45 = ',
-                answer: '168'
+                question: 'Convert the decimal number 56 to binary: ',
+                answer: '111000'
             },
             {
-                question: 'Perform the binary addition: 11100 + 1011 = ',
-                answer: '100111'
+                question: 'Convert the decimal number 105 to binary: ',
+                answer: '1101001'
             },
             {
-                question: 'Perform the decimal addition: 89 + 34 = ',
-                answer: '123'
+                question: 'Convert the decimal number 155 to binary: ',
+                answer: '10011011'
             },
             {
-                question: 'Perform the binary addition: 11001 + 101 = ',
-                answer: '11110'
-            },
-            {
-                question: 'Perform the decimal addition: 67 + 92 = ',
-                answer: '159'
-            },
-            {
-                question: 'Perform the binary addition: 110 + 11 = ',
-                answer: '1001'
-            },
-            {
-                question: 'Perform the decimal addition: 155 + 87 = ',
-                answer: '242'
-            },
-            {
-                question: 'Perform the binary addition: 1011 + 1101 = ',
-                answer: '11000'
-            },
-            {
-                question: 'Perform the decimal addition: 78 + 23 = ',
-                answer: '101'
-            },
-            {
-                question: 'Perform the binary addition: 111 + 10 = ',
-                answer: '1001'
-            },
-            {
-                question: 'Perform the decimal addition: 105 + 67 = ',
-                answer: '172'
-            },
-            {
-                question: 'Perform the binary addition: 10101 + 110 = ',
-                answer: '11011'
-            },
-            {
-                question: 'Perform the decimal addition: 46 + 38 = ',
-                answer: '84'
-            },
-            {
-                question: 'Perform the binary addition: 1001 + 111 = ',
-                answer: '1110'
-            },
-            // Add more questions as needed
+                question: 'Convert the binary number 100111 to decimal: ',
+                answer: '39'
+            }
         ];
 
         // Function to dynamically add structured questions to the form
@@ -247,84 +206,96 @@
         let userAnswers = [];
 
         function buildStructuredQuiz() {
-            const data = structuredBinaryDecimalQuestions[currentQuestionIndex];
+    const data = structuredBinaryDecimalQuestions[currentQuestionIndex];
 
-            const questionDiv = document.createElement('div');
-            questionDiv.className = 'question';
+    const questionDiv = document.createElement('div');
+    questionDiv.className = 'question';
 
-            const questionText = document.createElement('p');
-            questionText.textContent = `${currentQuestionIndex + 1}. ${data.question}`;
-            questionDiv.appendChild(questionText);
+    const questionText = document.createElement('p');
+    questionText.textContent = `${currentQuestionIndex + 1}. ${data.question}`;
+    questionDiv.appendChild(questionText);
 
-            const textarea = document.createElement('textarea');
-            textarea.setAttribute('id', `q${currentQuestionIndex + 1}`);
-            textarea.setAttribute('name', `q${currentQuestionIndex + 1}`);
-            textarea.setAttribute('required', 'true');
+    const textarea = document.createElement('textarea');
+    textarea.setAttribute('id', `q${currentQuestionIndex + 1}`);
+    textarea.setAttribute('name', `q${currentQuestionIndex + 1}`);
+    textarea.setAttribute('required', 'true');
 
-            questionDiv.appendChild(textarea);
+    questionDiv.appendChild(textarea);
 
-            questionContainer.innerHTML = '';
-            questionContainer.appendChild(questionDiv);
+    questionContainer.innerHTML = '';
+    questionContainer.appendChild(questionDiv);
 
-            // Show/Hide Next and Previous buttons
-            if (currentQuestionIndex === 0) {
-                prevBtn.style.display = 'none';
-            } else {
-                prevBtn.style.display = 'inline-block';
-            }
+    // Enable/disable Next and Previous buttons based on question index
+    nextBtn.disabled = currentQuestionIndex === structuredBinaryDecimalQuestions.length - 1;
+    prevBtn.disabled = currentQuestionIndex === 0;
+}
 
-            if (currentQuestionIndex === structuredBinaryDecimalQuestions.length - 1) {
-                nextBtn.style.display = 'none';
-                submitBtn.style.display = 'inline-block';
-            } else {
-                nextBtn.style.display = 'inline-block';
-                submitBtn.style.display = 'none';
-            }
-        }
+       function nextQuestion() {
+    if (currentQuestionIndex < structuredBinaryDecimalQuestions.length - 1) {
+        currentQuestionIndex++;
+        buildStructuredQuiz(currentQuestionIndex);
+    }
+}
 
-        function changeQuestion(direction) {
-            if (direction === 1 && currentQuestionIndex < structuredBinaryDecimalQuestions.length - 1) {
-                currentQuestionIndex++;
-            } else if (direction === -1 && currentQuestionIndex > 0) {
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
                 currentQuestionIndex--;
-            }
-
-            buildStructuredQuiz();
-        }
-
-        function checkStructuredAnswers() {
-            const answer = document.getElementById(`q${currentQuestionIndex + 1}`).value;
-            userAnswers[currentQuestionIndex] = answer;
-
-            if (currentQuestionIndex < structuredBinaryDecimalQuestions.length - 1) {
-                changeQuestion(1);
-            } else {
-                showStructuredQuizFeedback();
+                buildQuestion(currentQuestionIndex);
             }
         }
+function checkStructuredAnswers() {
+    const userAnswer = document.getElementById(`q${currentQuestionIndex + 1}`).value.trim();
+    userAnswers[currentQuestionIndex] = userAnswer;
 
-        function showStructuredQuizFeedback() {
-            let score = 0;
-            userAnswers.forEach((answer, index) => {
-                if (answer.trim().toLowerCase() === structuredBinaryDecimalQuestions[index].answer.toLowerCase()) {
-                    score++;
-                }
-            });
+    if (currentQuestionIndex < structuredBinaryDecimalQuestions.length - 1) {
+        nextQuestion();
+    } else {
+        showQuizFeedback();
+    }
+}
 
-            quizTitle.textContent = 'Quiz Completed';
-            quizInstructions.textContent = `Your score: ${score}/${structuredBinaryDecimalQuestions.length}`;
-            quizFeedback.textContent = 'Thank you for taking the quiz!';
-            questionContainer.innerHTML = '';
-
-            submitBtn.style.display = 'none';
-            prevBtn.style.display = 'none';
-            nextBtn.style.display = 'none';
+function showQuizFeedback() {
+    let score = 0;
+    userAnswers.forEach((userAnswer, index) => {
+        const correctAnswer = structuredBinaryDecimalQuestions[index].answer;
+        if (userAnswer === correctAnswer) { // No need to trim here since we're using textareas
+            score++;
         }
+    });
 
-        // Call the buildStructuredQuiz function when the page loads
-        window.onload = function () {
-            buildStructuredQuiz();
-        };
+    const quizTitle = document.getElementById('quizTitle');
+    const quizInstructions = document.getElementById('quizInstructions');
+    const quizFeedback = document.getElementById('quizFeedback');
+
+    quizTitle.textContent = 'Quiz Completed';
+    quizInstructions.textContent = `Your score: ${score}/${structuredBinaryDecimalQuestions.length}`;
+    quizFeedback.textContent = 'Thank you for taking the quiz!';
+    questionContainer.innerHTML = '';
+
+    const submitBtn = document.getElementById('submitBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    submitBtn.style.display = 'none';
+    prevBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+}
+console.log("User Answers:", userAnswers);
+userAnswers.forEach((userAnswer, index) => {
+    const correctAnswer = structuredBinaryDecimalQuestions[index].answer;
+    console.log(`Question ${index + 1}: User Answer - ${userAnswer}, Correct Answer - ${correctAnswer}`);
+    if (userAnswer.trim() === correctAnswer) {
+        score++;
+        console.log("Correct!");
+    } else {
+        console.log("Incorrect!");
+    }
+});
+        // Call the buildQuestion function when the page loads
+      window.onload = function () {
+    buildStructuredQuiz(currentQuestionIndex);
+};
+
  document.addEventListener('DOMContentLoaded', function() {
             // Create an audio element for background music
             const backgroundMusic = new Audio('background_music.mp3');
